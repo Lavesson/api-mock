@@ -4,8 +4,12 @@
 typedef std::unordered_map<std::string, std::string> Flags;
 typedef std::pair<std::string, std::string> FlagEntry;
 
+static const std::string ADDRESS = "127.0.0.1";
 static const int FLAG_SIGN_LENGTH = 2;
 static const std::string FLAG_SIGN = "--";
+static const Flags DEFAULT_OPTIONS = {
+		{ "port", "8888" }
+};
 
 FlagEntry extractFlagEntry(const std::string& entry) {
 	const std::string DELIMITER = "=";
@@ -29,10 +33,14 @@ Flags parseFlags(int argc, char** argv) {
 	return f;
 }
 
+Flags getMergedFlags(int argc, char** argv) {
+	auto flagsFromCmdLine = parseFlags(argc, argv);
+	flagsFromCmdLine.insert(DEFAULT_OPTIONS.begin(), DEFAULT_OPTIONS.end());
+	return flagsFromCmdLine;
+}
+
 int main(int argc, char** argv) {
-	std::cout << "Starting server" << std::endl;
-
-	auto flags = parseFlags(argc, argv);
-
+	auto flags = getMergedFlags(argc, argv);
+	printf("Starting server at %s:%s\n", ADDRESS.c_str(), flags["port"].c_str());
 	return 0;
 }
