@@ -8,7 +8,6 @@
 
 namespace ApiMock {
 	class Server {
-		typedef std::function<ResponseData(RequestData)> CreateResponse;
 		struct ServerImpl;
 		std::unique_ptr<ServerImpl> _impl;
 
@@ -16,6 +15,7 @@ namespace ApiMock {
 		Server(const Server&);
 
 	public:
+		typedef std::function<ResponseData(RequestData)> CreateResponse;
 		Server();
 		~Server();
 		void startServer(const std::string& address, int port, int bufferSize, CreateResponse createResponse);
