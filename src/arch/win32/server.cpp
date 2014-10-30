@@ -64,25 +64,33 @@ struct Server::ServerImpl {
 
 	void handleRequest(SOCKET client) {
 		int result = 0;
-		const int BUFFER_LENGTH = 512;
+		const int BUFFER_LENGTH = 1024*8; // Let's use 8k for now
 		char buffer[BUFFER_LENGTH];
+		ZeroMemory(buffer, BUFFER_LENGTH);
 
 		do {
 			result = recv(client, buffer, BUFFER_LENGTH, 0);
 			if (result > 0) printf("Bytes received: %d\n", result);
+
+			// Send a small response
+			std::string response = "<h1>It works!</h1>";
+			send(client, response.c_str(), response.length(), 0);
+			closesocket(client);
 		} while (result > 0);
 	}
 
 	void startListening() {
 		auto result = listen(_sock, SOMAXCONN);
-		auto client = accept(_sock, nullptr, nullptr);
+		
+		// Handle incoming requests as they occur
+		while (auto client = accept(_sock, nullptr, nullptr)) {
+			if (result == SOCKET_ERROR) {
+				printLastErrorToStdErr();
+				throw SocketException("Accepting a socket failed");
+			}
 
-		if (result == SOCKET_ERROR) {
-			printLastErrorToStdErr();
-			throw SocketException("Accepting a socket failed");
+			handleRequest(client);
 		}
-
-		handleRequest(client);
 	}
 
 	void listenTo(const std::string& address, int port) {
