@@ -40,10 +40,19 @@ Flags getMergedFlags(int argc, char** argv) {
 	return flagsFromCmdLine;
 }
 
+void startServer(Flags flags) {
+	try {
+		Server s;
+		s.startServer(ADDRESS, std::stoi(flags["port"]));
+	}
+	catch (SocketException e) {
+		printf(e.what());
+	}
+}
+
 int main(int argc, char** argv) {
 	auto flags = getMergedFlags(argc, argv);
 	printf("Starting server at %s:%s\n", ADDRESS.c_str(), flags["port"].c_str());
-	Server s;
-	s.startServer(ADDRESS, std::stoi(flags["port"]));
+	startServer(flags);
 	return 0;
 }
