@@ -2,9 +2,12 @@
 #define APIMOCK_SERVER_H
 #include <string>
 #include <memory>
+#include <functional>
+#include "http/RequestData.h"
 
 namespace ApiMock {
 	class Server {
+		typedef std::function<void(RequestData)> CreateResponse;
 		struct ServerImpl;
 		std::unique_ptr<ServerImpl> _impl;
 
@@ -14,7 +17,7 @@ namespace ApiMock {
 	public:
 		Server();
 		~Server();
-		void startServer(const std::string& address, int port, int bufferSize);
+		void startServer(const std::string& address, int port, int bufferSize, CreateResponse createResponse);
 	};
 }
 

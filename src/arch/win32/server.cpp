@@ -63,7 +63,7 @@ struct ApiMock::Server::ServerImpl {
 		}
 	}
 
-	void handleRequest(SOCKET client, int bufferSize) {
+	void handleRequest(SOCKET client, int bufferSize, CreateResponse createResponse) {
 		int result = 0;
 		char* buffer = new char[bufferSize];
 		ZeroMemory(buffer, bufferSize);
@@ -72,6 +72,8 @@ struct ApiMock::Server::ServerImpl {
 		do {
 			result = recv(client, buffer, bufferSize, 0);
 			auto request = rqp.parse(std::string(buffer));
+
+			createResponse(request);
 
 			// Send a small response
 			std::string response = "<h1>It works!</h1>";
@@ -82,7 +84,7 @@ struct ApiMock::Server::ServerImpl {
 		delete buffer;
 	}
 
-	void startListening(int bufferSize) {
+	void startListening(int bufferSize, CreateResponse createResponse) {
 		auto result = listen(_sock, SOMAXCONN);
 		
 		// Handle incoming requests as they occur
@@ -92,17 +94,17 @@ struct ApiMock::Server::ServerImpl {
 				throw SocketException("Accepting a socket failed");
 			}
 
-			handleRequest(client, bufferSize);
+			handleRequest(client, bufferSize, createResponse);
 		}
 	}
 
-	void listenTo(const std::string& address, int port, int bufferSize) {
+	void listenTo(const std::string& address, int port, int bufferSize, CreateResponse createResponse) {
 		makeSureSocketsStarted(
 			WSAStartup(VERSION_WINSOCK2, &_wsaOptions));
 
 		tryToCreateSocket(address, port);
 		tryToBindSocket();
-		startListening(bufferSize);
+		startListening(bufferSize, createResponse);
 	}
 
 	~ServerImpl() {
@@ -114,6 +116,6 @@ struct ApiMock::Server::ServerImpl {
 ApiMock::Server::Server() : _impl(new ServerImpl) {}
 ApiMock::Server::~Server() {}
 
-void ApiMock::Server::startServer(const std::string& address, int port, int bufferSize) {
-	_impl->listenTo(address, port, bufferSize);
+void ApiMock::Server::startServer(const std::string& address, int port, int bufferSize, CreateResponse createResponse) {
+	_impl->listenTo(address, port, bufferSize, createResponse);
 }
