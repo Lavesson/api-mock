@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unordered_map>
+#include "api-mock.h"
 
 typedef std::unordered_map<std::string, std::string> Flags;
 typedef std::pair<std::string, std::string> FlagEntry;
@@ -42,5 +43,7 @@ Flags getMergedFlags(int argc, char** argv) {
 int main(int argc, char** argv) {
 	auto flags = getMergedFlags(argc, argv);
 	printf("Starting server at %s:%s\n", ADDRESS.c_str(), flags["port"].c_str());
+	Server s;
+	s.startServer(ADDRESS, std::stoi(flags["port"]));
 	return 0;
 }
