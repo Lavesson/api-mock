@@ -6,7 +6,7 @@
 #define VERSION_WINSOCK2 0x0202
 #pragma comment(lib, "wsock32.lib")
 
-struct Server::ServerImpl {
+struct ApiMock::Server::ServerImpl {
 	SOCKET _sock;
 	WSADATA _wsaOptions;
 	SOCKADDR_IN _sockAddr;
@@ -109,9 +109,9 @@ struct Server::ServerImpl {
 	}
 };
 
-Server::Server() : _impl(new ServerImpl) {}
-Server::~Server() {}
+ApiMock::Server::Server() : _impl(new ServerImpl) {}
+ApiMock::Server::~Server() {}
 
-void Server::startServer(const std::string& address, int port, int bufferSize) {
+void ApiMock::Server::startServer(const std::string& address, int port, int bufferSize) {
 	_impl->listenTo(address, port, bufferSize);
 }

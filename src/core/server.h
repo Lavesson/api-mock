@@ -3,17 +3,19 @@
 #include <string>
 #include <memory>
 
-class Server {
-	struct ServerImpl;
-	std::unique_ptr<ServerImpl> _impl;
+namespace ApiMock {
+	class Server {
+		struct ServerImpl;
+		std::unique_ptr<ServerImpl> _impl;
 
-	Server& operator=(const Server&);
-	Server(const Server&);
+		Server& operator=(const Server&);
+		Server(const Server&);
 
-public:
-	Server();
-	~Server();
-	void startServer(const std::string& address, int port, int bufferSize);
-};
+	public:
+		Server();
+		~Server();
+		void startServer(const std::string& address, int port, int bufferSize);
+	};
+}
 
 #endif

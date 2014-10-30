@@ -3,13 +3,15 @@
 #include <exception>
 #include <string>
 
-class SocketException : public std::exception {
-private:
-	std::string _problem;
+namespace ApiMock {
+	class SocketException : public std::exception {
+	private:
+		std::string _problem;
 
-public:
-	SocketException(const std::string& problem);
-	char const* what() const override;
-};
+	public:
+		SocketException(const std::string& problem);
+		char const* what() const override;
+	};
+}
 
 #endif
