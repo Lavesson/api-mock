@@ -72,12 +72,10 @@ struct ApiMock::Server::ServerImpl {
 		do {
 			result = recv(client, buffer, bufferSize, 0);
 			auto request = rqp.parse(std::string(buffer));
-
-			createResponse(request);
+			auto response = createResponse(request);
 
 			// Send a small response
-			std::string response = "<h1>It works!</h1>";
-			send(client, response.c_str(), response.length(), 0);
+			send(client, response.body.c_str(), response.body.length(), 0);
 			closesocket(client);
 		} while (result > 0);
 

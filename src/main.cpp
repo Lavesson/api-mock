@@ -47,7 +47,9 @@ void startServer(Flags flags) {
 		s.startServer(
 			ADDRESS, std::stoi(flags["port"]), std::stoi(flags["buffer"]), [](ApiMock::RequestData request)
 		{
-			
+			ApiMock::ResponseData response;
+			response.body = "<h1>Hello, world</h1>";
+			return response;
 		});
 	}
 	catch (ApiMock::SocketException e) {
