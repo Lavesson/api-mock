@@ -1,5 +1,6 @@
 #include "core/server.h"
 #include "core/exceptions.h"
+#include "http/RequestParser.h"
 #include <windows.h>
 #include <winsock.h>
 
@@ -66,10 +67,11 @@ struct ApiMock::Server::ServerImpl {
 		int result = 0;
 		char* buffer = new char[bufferSize];
 		ZeroMemory(buffer, bufferSize);
+		RequestParser rqp;
 
 		do {
 			result = recv(client, buffer, bufferSize, 0);
-			if (result > 0) printf("Bytes received: %d\n", result);
+			auto request = rqp.parse(std::string(buffer));
 
 			// Send a small response
 			std::string response = "<h1>It works!</h1>";
