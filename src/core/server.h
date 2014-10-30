@@ -1,5 +1,5 @@
-#ifndef	APIMOCK_CORE_SERVER_H
-#define APIMOCK_CORE_SERVER_H
+#ifndef	APIMOCK_SERVER_H
+#define APIMOCK_SERVER_H
 #include <string>
 #include <memory>
 
