@@ -46,7 +46,7 @@ void startServer(Flags flags) {
 		s.startServer(ADDRESS, std::stoi(flags["port"]));
 	}
 	catch (SocketException e) {
-		printf(e.what());
+		printf("%s\n", e.what());
 	}
 }
 

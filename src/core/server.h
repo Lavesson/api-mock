@@ -13,7 +13,7 @@ class Server {
 public:
 	Server();
 	~Server();
-	void startServer(std::string address, int port);
+	void startServer(const std::string& address, int port);
 };
 
 #endif

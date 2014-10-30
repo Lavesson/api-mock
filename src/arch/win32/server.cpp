@@ -7,28 +7,95 @@
 #pragma comment(lib, "wsock32.lib")
 
 struct Server::ServerImpl {
-	SOCKET s;
-	WSADATA w;
+	SOCKET _sock;
+	WSADATA _wsaOptions;
+	SOCKADDR_IN _sockAddr;
 
 	void makeSureSocketsStarted(int err) {
 		if (err)
-			throw SocketException("Something went wrong when starting WinSock. The error code was: " + std::to_string(err) + "\n");
+			throw SocketException("Something went wrong when starting WinSock. The error code was: " + std::to_string(err));
 
-		if (w.wVersion != VERSION_WINSOCK2)
-			throw SocketException("Expected WinSock 2.0, but the reported version was: " + std::string(w.szDescription) + "\n");
+		if (_wsaOptions.wVersion != VERSION_WINSOCK2)
+			throw SocketException("Expected WinSock 2.0, but the reported version was: " + std::string(_wsaOptions.szDescription));
 	}
 
-	void listen(std::string address, int port) {
-		makeSureSocketsStarted(
-			WSAStartup(VERSION_WINSOCK2, &w));
+	void createSocket(const std::string& address, int port) {
+		_sockAddr.sin_family = AF_INET;
+		_sockAddr.sin_port = htons(port);
+		_sockAddr.sin_addr.s_addr = inet_addr(address.c_str());
+		_sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	}
 
-		SOCKADDR_IN sockData;
-		sockData.sin_family = AF_INET;
-		sockData.sin_port = htons(port);
-		sockData.sin_addr.s_addr = htonl(inet_addr(address.c_str()));
+	void tryToCreateSocket(const std::string& address, int port) {
+		createSocket(address, port);
+
+		if (_sock == INVALID_SOCKET) {
+			printLastErrorToStdErr();
+			throw SocketException("Could not create socket");
+		}
+	}
+
+	bool bindingFailed() {
+		auto r = bind(
+			_sock,
+			reinterpret_cast<LPSOCKADDR>(&_sockAddr),
+			sizeof(_sockAddr));
+
+		return r == SOCKET_ERROR || r == INVALID_SOCKET;
+	}
+
+	void printLastErrorToStdErr() {
+		wchar_t *s = nullptr;
+		FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+			nullptr, WSAGetLastError(),
+			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+			reinterpret_cast<LPTSTR>(&s), 0, nullptr);
+
+		fprintf(stderr, "%S", s);
+		LocalFree(s);
+	}
+
+	void tryToBindSocket() {
+		if (bindingFailed()) {
+			printLastErrorToStdErr();
+			throw SocketException("Could not bind socket");
+		}
+	}
+
+	void handleRequest(SOCKET client) {
+		int result = 0;
+		const int BUFFER_LENGTH = 512;
+		char buffer[BUFFER_LENGTH];
+
+		do {
+			result = recv(client, buffer, BUFFER_LENGTH, 0);
+			if (result > 0) printf("Bytes received: %d\n", result);
+		} while (result > 0);
+	}
+
+	void startListening() {
+		auto result = listen(_sock, SOMAXCONN);
+		auto client = accept(_sock, nullptr, nullptr);
+
+		if (result == SOCKET_ERROR) {
+			printLastErrorToStdErr();
+			throw SocketException("Accepting a socket failed");
+		}
+
+		handleRequest(client);
+	}
+
+	void listenTo(const std::string& address, int port) {
+		makeSureSocketsStarted(
+			WSAStartup(VERSION_WINSOCK2, &_wsaOptions));
+
+		tryToCreateSocket(address, port);
+		tryToBindSocket();
+		startListening();
 	}
 
 	~ServerImpl() {
+		if (_sock) closesocket(_sock);
 		WSACleanup();
 	}
 };
@@ -36,6 +103,6 @@ struct Server::ServerImpl {
 Server::Server() : _impl(new ServerImpl) {}
 Server::~Server() {}
 
-void Server::startServer(std::string address, int port) {
-	_impl->listen(address, port);
+void Server::startServer(const std::string& address, int port) {
+	_impl->listenTo(address, port);
 }
