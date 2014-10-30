@@ -3,7 +3,8 @@
 #include <string>
 #include <memory>
 #include <functional>
-#include "http/RequestData.h"
+#include "http/requestdata.h"
+#include "http/responsedata.h"
 
 namespace ApiMock {
 	class Server {
