@@ -62,14 +62,13 @@ struct Server::ServerImpl {
 		}
 	}
 
-	void handleRequest(SOCKET client) {
+	void handleRequest(SOCKET client, int bufferSize) {
 		int result = 0;
-		const int BUFFER_LENGTH = 1024*8; // Let's use 8k for now
-		char buffer[BUFFER_LENGTH];
-		ZeroMemory(buffer, BUFFER_LENGTH);
+		char* buffer = new char[bufferSize];
+		ZeroMemory(buffer, bufferSize);
 
 		do {
-			result = recv(client, buffer, BUFFER_LENGTH, 0);
+			result = recv(client, buffer, bufferSize, 0);
 			if (result > 0) printf("Bytes received: %d\n", result);
 
 			// Send a small response
@@ -77,9 +76,11 @@ struct Server::ServerImpl {
 			send(client, response.c_str(), response.length(), 0);
 			closesocket(client);
 		} while (result > 0);
+
+		delete buffer;
 	}
 
-	void startListening() {
+	void startListening(int bufferSize) {
 		auto result = listen(_sock, SOMAXCONN);
 		
 		// Handle incoming requests as they occur
@@ -89,17 +90,17 @@ struct Server::ServerImpl {
 				throw SocketException("Accepting a socket failed");
 			}
 
-			handleRequest(client);
+			handleRequest(client, bufferSize);
 		}
 	}
 
-	void listenTo(const std::string& address, int port) {
+	void listenTo(const std::string& address, int port, int bufferSize) {
 		makeSureSocketsStarted(
 			WSAStartup(VERSION_WINSOCK2, &_wsaOptions));
 
 		tryToCreateSocket(address, port);
 		tryToBindSocket();
-		startListening();
+		startListening(bufferSize);
 	}
 
 	~ServerImpl() {
@@ -111,6 +112,6 @@ struct Server::ServerImpl {
 Server::Server() : _impl(new ServerImpl) {}
 Server::~Server() {}
 
-void Server::startServer(const std::string& address, int port) {
-	_impl->listenTo(address, port);
+void Server::startServer(const std::string& address, int port, int bufferSize) {
+	_impl->listenTo(address, port, bufferSize);
 }

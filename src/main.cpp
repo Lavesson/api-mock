@@ -9,7 +9,8 @@ static const std::string ADDRESS = "127.0.0.1";
 static const int FLAG_SIGN_LENGTH = 2;
 static const std::string FLAG_SIGN = "--";
 static const Flags DEFAULT_OPTIONS = {
-		{ "port", "8888" }
+		{ "port", "8888" },
+		{ "buffer", "8192" }
 };
 
 FlagEntry extractFlagEntry(const std::string& entry) {
@@ -43,7 +44,7 @@ Flags getMergedFlags(int argc, char** argv) {
 void startServer(Flags flags) {
 	try {
 		Server s;
-		s.startServer(ADDRESS, std::stoi(flags["port"]));
+		s.startServer(ADDRESS, std::stoi(flags["port"]), std::stoi(flags["buffer"]));
 	}
 	catch (SocketException e) {
 		printf("%s\n", e.what());
