@@ -1,6 +1,7 @@
 #include "core/server.h"
 #include "core/exceptions.h"
-#include "http/RequestParser.h"
+#include "http/requestparser.h"
+#include "http/responseserializer.h"
 #include <windows.h>
 #include <winsock.h>
 
@@ -68,6 +69,7 @@ struct ApiMock::Server::ServerImpl {
 		char* buffer = new char[bufferSize];
 		ZeroMemory(buffer, bufferSize);
 		RequestParser rqp;
+		ResponseSerializer serializer;
 
 		do {
 			result = recv(client, buffer, bufferSize, 0);
@@ -75,7 +77,7 @@ struct ApiMock::Server::ServerImpl {
 			auto response = createResponse(request);
 
 			// Send a small response
-			send(client, response.body.c_str(), response.body.length(), 0);
+			send(client, serializer.serialize(response).c_str(), response.body.length(), 0);
 			closesocket(client);
 		} while (result > 0);
 
