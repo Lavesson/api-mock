@@ -43,7 +43,7 @@ Flags getMergedFlags(int argc, char** argv) {
 
 void startServer(Flags flags) {
 	try {
-		ApiMock::Server s;
+		ApiMock::HttpServer s;
 		s.startServer(
 			ADDRESS, std::stoi(flags["port"]), std::stoi(flags["buffer"]), [](ApiMock::RequestData request)
 		{
