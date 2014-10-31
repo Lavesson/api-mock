@@ -53,5 +53,19 @@ std::string ApiMock::ResponseSerializer::serialize(ResponseData response) {
 	const std::string CRLF = "\r\n";
 	std::stringstream ss;
 
-	return ss.str();
+	// Status line
+	ss << "HTTP/1.1 ";
+	ss << std::to_string(response.statusCode) << " " << statusCodeDescription(response.statusCode);
+	ss << CRLF;
+	
+	// Response headers
+	for (auto header : response.headers)
+		ss << header.first << ": " << header.second << CRLF;
+
+	// Body
+	ss << CRLF;
+	ss << response.body;
+
+	auto r = ss.str();
+	return r;
 }
