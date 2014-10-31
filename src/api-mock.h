@@ -6,5 +6,6 @@
 #include "http/requestdata.h"
 #include "http/requestdata.h"
 #include "http/statuscodes.h"
+#include "http/staticresourcestrategy.h"
 
 #endif
