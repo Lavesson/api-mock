@@ -44,13 +44,9 @@ Flags getMergedFlags(int argc, char** argv) {
 void startServer(Flags flags) {
 	try {
 		ApiMock::HttpServer s;
+		ApiMock::StaticResourceStrategy srs;
 		s.startServer(
-			ADDRESS, std::stoi(flags["port"]), std::stoi(flags["buffer"]), [](ApiMock::RequestData request)
-		{
-			ApiMock::ResponseData response;
-			response.body = "<h1>Hello, world</h1>";
-			return response;
-		});
+			ADDRESS, std::stoi(flags["port"]), std::stoi(flags["buffer"]), &srs);
 	}
 	catch (ApiMock::SocketException e) {
 		printf("%s\n", e.what());
