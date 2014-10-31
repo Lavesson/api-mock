@@ -34,6 +34,7 @@ struct ApiMock::Server::ServerImpl {
 	SOCKET _sock;
 	WSADATA _wsaOptions;
 	SOCKADDR_IN _sockAddr;
+	int _bufferSize;
 
 	void makeSureSocketsStarted(int err) {
 		if (err)
@@ -86,47 +87,43 @@ struct ApiMock::Server::ServerImpl {
 		}
 	}
 
-	void handleRequest(SOCKET client, int bufferSize, CreateResponse createResponse) {
+	std::string getRequestString(SOCKET client) {
 		int result = 0;
-		char* buffer = new char[bufferSize];
-		ZeroMemory(buffer, bufferSize);
-		RequestParser rqp;
-		ResponseSerializer serializer;
+		char* buffer = new char[_bufferSize];
+		ZeroMemory(buffer, _bufferSize);
 
-		do {
-			result = recv(client, buffer, bufferSize, 0);
-			auto request = rqp.parse(std::string(buffer));
-			auto response = createResponse(request);
-
-			// Send a small response
-			send(client, serializer.serialize(response).c_str(), response.body.length(), 0);
-			closesocket(client);
-		} while (result > 0);
-
+		result = recv(client, buffer, _bufferSize, 0);
+		std::string request(buffer);
 		delete buffer;
+		return request;
 	}
 
-	void startListening(int bufferSize, CreateResponse createResponse) {
+	bool acceptNext(IncomingRequest** request) {
 		auto result = listen(_sock, SOMAXCONN);
-		
-		// Handle incoming requests as they occur
-		while (auto client = accept(_sock, nullptr, nullptr)) {
-			if (result == SOCKET_ERROR) {
-				printLastErrorToStdErr();
-				throw SocketException("Accepting a socket failed");
-			}
+		auto client = accept(_sock, nullptr, nullptr);
 
-			handleRequest(client, bufferSize, createResponse);
+		if (!client) 
+			return false;
+
+		if (result == SOCKET_ERROR) {
+			printLastErrorToStdErr();
+			throw SocketException("Accepting a socket failed");
 		}
+
+		*request = new WinSockRequest(
+			client, getRequestString(client));
+
+		return true;
 	}
 
-	void listenTo(const std::string& address, int port, int bufferSize, CreateResponse createResponse) {
+	void setup(const std::string& address, int port, int bufferSize) {
+		_bufferSize = bufferSize;
+
 		makeSureSocketsStarted(
 			WSAStartup(VERSION_WINSOCK2, &_wsaOptions));
 
 		tryToCreateSocket(address, port);
 		tryToBindSocket();
-		startListening(bufferSize, createResponse);
 	}
 
 	~ServerImpl() {
@@ -138,6 +135,14 @@ struct ApiMock::Server::ServerImpl {
 ApiMock::Server::Server() : _impl(new ServerImpl) {}
 ApiMock::Server::~Server() {}
 
-void ApiMock::Server::startServer(const std::string& address, int port, int bufferSize, CreateResponse createResponse) {
-	_impl->listenTo(address, port, bufferSize, createResponse);
+void ApiMock::Server::initialize(const std::string& address, int port, int bufferSize) {
+	_impl->setup(address, port, bufferSize);
+}
+
+bool ApiMock::Server::acceptNext(IncomingRequest** incoming) {
+	return _impl->acceptNext(incoming);
+}
+
+void ApiMock::Server::close(IncomingRequest* incoming) {
+	delete incoming;
 }

@@ -7,6 +7,8 @@
 #include "http/responsedata.h"
 
 namespace ApiMock {
+	class IncomingRequest;
+
 	class Server {
 		struct ServerImpl;
 		std::unique_ptr<ServerImpl> _impl;
@@ -15,10 +17,11 @@ namespace ApiMock {
 		Server(const Server&);
 
 	public:
-		typedef std::function<ResponseData(RequestData)> CreateResponse;
 		Server();
 		~Server();
-		void startServer(const std::string& address, int port, int bufferSize, CreateResponse createResponse);
+		void initialize(const std::string& address, int port, int bufferSize);
+		bool acceptNext(IncomingRequest** incoming);
+		void close(IncomingRequest* incoming);
 	};
 }
 
