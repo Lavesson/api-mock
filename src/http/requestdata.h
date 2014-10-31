@@ -2,6 +2,7 @@
 #define APIMOCK_REQUESTDATA_H
 
 #include <string>
+#include <unordered_map>
 
 namespace ApiMock {
 	struct RequestData {
@@ -17,6 +18,7 @@ namespace ApiMock {
 		} method;
 
 		std::string requestUri;
+		std::unordered_map<std::string, std::string> headers;
 	};
 }
 
