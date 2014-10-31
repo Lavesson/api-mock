@@ -5,6 +5,8 @@
 #include "core/server.h"
 
 namespace ApiMock {
+	class ResourceStrategy;
+
 	class HttpServer {
 		Server server;
 		HttpServer& operator=(const HttpServer&);
@@ -13,8 +15,7 @@ namespace ApiMock {
 	public:
 		HttpServer();
 		~HttpServer();
-		typedef std::function<ResponseData(RequestData)> CreateResponse;
-		void startServer(const std::string& address, int port, int bufferSize, CreateResponse createResponse);
+		void startServer(const std::string& address, int port, int bufferSize, ResourceStrategy* resourceStrategy);
 	};
 }
 
