@@ -1,12 +1,34 @@
 #include "core/server.h"
 #include "core/exceptions.h"
-#include "http/requestparser.h"
-#include "http/responseserializer.h"
+#include "core/incomingrequest.h"
 #include <windows.h>
 #include <winsock.h>
 
 #define VERSION_WINSOCK2 0x0202
 #pragma comment(lib, "wsock32.lib")
+
+namespace ApiMock {
+	class WinSockRequest : public IncomingRequest {
+		SOCKET _client;
+		std::string _requestString;
+
+	public:
+		WinSockRequest(SOCKET client, std::string requestString)
+			: _client(client), _requestString(requestString) {}
+
+		~WinSockRequest() {
+			closesocket(_client);
+		}
+
+		std::string getRequestAsString() override {
+			return _requestString;
+		}
+
+		void sendResponse(std::string const& responseAsString) override {
+			send(_client, responseAsString.c_str(), responseAsString.length(), 0);
+		}
+	};
+}
 
 struct ApiMock::Server::ServerImpl {
 	SOCKET _sock;
