@@ -11,6 +11,7 @@ namespace ApiMock {
 		bool operator==(const RoutingTemplate& other) const;
 		explicit RoutingTemplate(const std::string& routeTemplate);
 		std::string getTemplate() const;
+		bool isMatch(const std::string& uri) const;
 	};
 }
 

@@ -24,17 +24,14 @@ ApiMock::ResponseData ApiMock::RoutedResourceStrategy::errorResponse(HTTP_RESPON
 ApiMock::ResponseData ApiMock::RoutedResourceStrategy::createResponse(RequestData const& request) {
 	auto route = matchRoute(request.requestUri);
 
-	if (!route) return errorResponse(HTTP_NOT_FOUND);
-
-	ResponseData r;
+	if (!route)
+		return errorResponse(HTTP_NOT_FOUND);
 
 	switch (request.method) {
-	case RequestData::GET: route->get(request); break;
-	case RequestData::POST: route->post(request); break;
-	case RequestData::PUT: route->put(request); break;
-	case RequestData::DELETE: route->del(request); break;
-	default: return errorResponse(HTTP_METHOD_NOT_ALLOWED);
+	case RequestData::GET:		return route->get(request);
+	case RequestData::POST:		return route->post(request);
+	case RequestData::PUT:		return route->put(request);
+	case RequestData::DELETE:	return route->del(request);
+	default:					return errorResponse(HTTP_METHOD_NOT_ALLOWED);
 	}
-
-	return r;
 }
