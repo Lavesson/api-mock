@@ -1,13 +1,15 @@
 #include "routedresourcestrategy.h"
 #include "routingtemplate.h"
-#include "controllers/controller.h"
 
 void ApiMock::RoutedResourceStrategy::registerRoute(RoutingTemplate route, Controller* ctrl) {
 	_routeMap.insert(
-		std::make_pair(route, ctrl));
+		std::make_pair(route, std::unique_ptr<Controller>(ctrl)));
 }
 
 ApiMock::Controller* ApiMock::RoutedResourceStrategy::matchRoute(const std::string& uri) {
+	for (auto& r : _routeMap)
+		if (r.first.isMatch(uri)) return r.second.get();
+
 	return nullptr;
 }
 
