@@ -2,8 +2,8 @@
 #define APIMOCK_CONTROLLER_H
 
 namespace ApiMock {
-	class ResponseData;
-	class RequestData;
+	struct ResponseData;
+	struct RequestData;
 	enum HTTP_RESPONSE_CODE;
 
 	class Controller {
