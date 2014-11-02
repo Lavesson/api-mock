@@ -1,9 +1,10 @@
 #ifndef	APIMOCK_CONTROLLER_H
 #define APIMOCK_CONTROLLER_H
 
+#include "http/requestdata.h"
+#include "http/responsedata.h"
+
 namespace ApiMock {
-	struct ResponseData;
-	struct RequestData;
 	enum HTTP_RESPONSE_CODE;
 
 	class Controller {
