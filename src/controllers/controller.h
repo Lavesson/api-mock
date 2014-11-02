@@ -6,12 +6,14 @@
 
 namespace ApiMock {
 	enum HTTP_RESPONSE_CODE;
+	class Result;
 
 	class Controller {
 	public:
 		virtual ~Controller() {}
 		
 		ResponseData createResponse(HTTP_RESPONSE_CODE statusCode);
+		ResponseData createResponse(HTTP_RESPONSE_CODE statusCode, Result* payload);
 
 		virtual ResponseData get(RequestData request);
 		virtual ResponseData put(RequestData request);
