@@ -8,6 +8,7 @@
 #include "http/requestdata.h"
 #include "http/statuscodes.h"
 
+#include "routing/config.h"
 #include "routing/routedresourcestrategy.h"
 
 #endif
