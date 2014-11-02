@@ -2,6 +2,8 @@
 #include "routeregistry.h"
 #include "routingtemplate.h"
 
+#include "controllers/dashboardcontroller.h"
+
 void ApiMock::ConfigureRoutes(RouteRegistry* routes) {
-	routes->registerRoute(RoutingTemplate("/test/{id}"), nullptr);
+	routes->registerRoute(RoutingTemplate("/dashboard"), new DashboardController);
 }
