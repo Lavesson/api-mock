@@ -16,7 +16,7 @@ void ApiMock::HttpServer::startServer(std::string const& address, int port, int 
 	
 	while (server.acceptNext(&incoming)) {
 		auto request = rp.parse(incoming->getRequestAsString());
-		auto response = resourceStrategy->CreateResponse(request);
+		auto response = resourceStrategy->createResponse(request);
 		
 		incoming->sendResponse(rs.serialize(response));
 		server.close(incoming);

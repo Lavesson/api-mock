@@ -1,6 +1,6 @@
 #include "routedresourcestrategy.h"
 
-ApiMock::ResponseData ApiMock::RoutedResourceStrategy::CreateResponse(RequestData const& request) {
+ApiMock::ResponseData ApiMock::RoutedResourceStrategy::createResponse(RequestData const& request) {
 	ResponseData r;
 	return r;
 }

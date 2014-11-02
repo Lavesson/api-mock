@@ -6,7 +6,7 @@
 namespace ApiMock {
 	class RoutedResourceStrategy : public ResourceStrategy {
 	public:
-		ResponseData CreateResponse(RequestData const& request) override;
+		ResponseData createResponse(RequestData const& request) override;
 	};
 }
 

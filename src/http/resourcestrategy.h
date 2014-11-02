@@ -8,7 +8,7 @@ namespace ApiMock {
 	class ResourceStrategy {
 	public:
 		virtual ~ResourceStrategy() {}
-		virtual ResponseData CreateResponse(const RequestData& request) = 0;
+		virtual ResponseData createResponse(const RequestData& request) = 0;
 	};
 }
 
