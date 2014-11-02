@@ -37,4 +37,17 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 file(GLOB_RECURSE HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
 
-add_executable(ApiMock ${HEADER_FILES} ${SOURCE_FILES})
+
+add_executable(ApiMock ${HEADER_FILES} ${SOURCE_FILES} ${WEB_RESOURCE_FILES})
+
+set(WWW "${CMAKE_SOURCE_DIR}/src/www")
+set(WWW_LOCATION_1 $<TARGET_FILE_DIR:ApiMock>/www)
+set(WWW_LOCATION_2 ${CMAKE_CURRENT_BINARY_DIR}/www)
+
+add_custom_command(
+	TARGET ApiMock POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${WWW} ${WWW_LOCATION_1})
+    
+add_custom_command(
+	TARGET ApiMock POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${WWW} ${WWW_LOCATION_2})
