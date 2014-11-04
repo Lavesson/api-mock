@@ -8,6 +8,6 @@ ApiMock::DashboardController::DashboardController(ContentService* content)
 
 ApiMock::ResponseData ApiMock::DashboardController::get(RequestData request) {
 	auto content = _content->getContent(request.requestUri);
-	PureTextResult c(content.content, content.mimeType);
+	RawResult c(content.content, content.mimeType);
 	return createResponse(HTTP_OK, &c);
 }

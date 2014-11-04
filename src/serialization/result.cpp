@@ -1,12 +1,12 @@
 #include "result.h"
 
-ApiMock::PureTextResult::PureTextResult(std::string const& payload, std::string const& mime)
+ApiMock::RawResult::RawResult(std::string const& payload, std::string const& mime)
 	: _payload(payload), _mime(mime) {}
 
-std::string ApiMock::PureTextResult::getMimeType() {
+std::string ApiMock::RawResult::getMimeType() {
 	return _mime;
 }
 
-std::string ApiMock::PureTextResult::getSerializedResult() {
+std::string ApiMock::RawResult::getSerializedResult() {
 	return _payload;
 }
