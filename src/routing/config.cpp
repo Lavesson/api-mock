@@ -11,5 +11,6 @@ void ApiMock::ConfigureDependencies() {
 }
 
 void ApiMock::ConfigureRoutes(RouteRegistry* routes) {
-	routes->registerRoute(RoutingTemplate("/dashboard"), new DashboardController);
+	routes->registerRoute(RoutingTemplate("/dashboard"), new DashboardController(
+		ServiceRegistry::Resolve<ContentService>()));
 }
