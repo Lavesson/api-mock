@@ -45,6 +45,7 @@ void startServer(Flags flags) {
 	try {
 		ApiMock::HttpServer s;
 		ApiMock::RoutedResourceStrategy routes;
+		ApiMock::ConfigureDependencies();
 		ApiMock::ConfigureRoutes(&routes);
 		
 		s.startServer(
