@@ -4,6 +4,7 @@
 #include "ioc/ioc.h"
 #include "controllers/dashboardcontroller.h"
 #include "infrastructure/filecontentservice.h"
+#include <controllers/rootcontroller.h>
 
 
 void ApiMock::ConfigureDependencies() {
@@ -12,5 +13,8 @@ void ApiMock::ConfigureDependencies() {
 
 void ApiMock::ConfigureRoutes(RouteRegistry* routes) {
 	routes->registerRoute(RoutingTemplate("/dashboard"), new DashboardController(
+		ServiceRegistry::Resolve<ContentService>()));
+
+	routes->registerRoute(RoutingTemplate("/{filename}"), new RootController(
 		ServiceRegistry::Resolve<ContentService>()));
 }
