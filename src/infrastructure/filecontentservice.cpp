@@ -4,8 +4,8 @@
 
 ApiMock::Content ApiMock::FileContentService::getContent(const std::string& path) {
 	Content content;
-
-	std::ifstream dashboard("www/dashboard.html");
+	auto dashFile = "www/dashboard.html";
+	std::ifstream dashboard(dashFile);
 	std::string temp;
 	std::string body;
 
@@ -15,7 +15,7 @@ ApiMock::Content ApiMock::FileContentService::getContent(const std::string& path
 	Content c;
 
 	c.content = body;
-	c.mimeType = "text/html";
+	c.mimeType = Mime::GetMimeByFileName(dashFile);
 
 	return c;
 }

@@ -7,18 +7,24 @@ namespace ApiMock {
 	class Mime {
 
 	public:
-		std::string GetMimeByFileName(const std::string& filename) {
+		static std::string GetMimeByFileName(const std::string& filename) {
 			static const std::unordered_map<std::string, std::string> MIME_TYPES{
-					{ ".css", "text/css" },
-					{ ".html", "text/html" },
-					{ ".js", "application/javascript" },
-					{ ".jpg", "image/jpeg" },
-					{ ".jpeg", "image/jpeg" },
-					{ ".png", "image/png" },
+					{ "css", "text/css" },
+					{ "html", "text/html" },
+					{ "js", "application/javascript" },
+					{ "jpg", "image/jpeg" },
+					{ "jpeg", "image/jpeg" },
+					{ "png", "image/png" },
 			};
 
-			// TODO: Uh. Implement
-			return "";
+			std::string::size_type idx;
+			idx = filename.rfind('.');
+
+			if (idx != std::string::npos)
+				return MIME_TYPES.at(filename.substr(idx + 1));
+
+			// If unknown, default to text/plain
+			return "text/plain";
 		}
 	};
 }
