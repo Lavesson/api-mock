@@ -1,12 +1,12 @@
 #include "result.h"
 
-ApiMock::Html::Html(std::string const& html) 
-	: _html(html) {}
+ApiMock::PureTextResult::PureTextResult(std::string const& payload, std::string const& mime)
+	: _payload(payload), _mime(mime) {}
 
-std::string ApiMock::Html::getMimeType() {
-	return "text/html";
+std::string ApiMock::PureTextResult::getMimeType() {
+	return _mime;
 }
 
-std::string ApiMock::Html::getSerializedResult() {
-	return _html;
+std::string ApiMock::PureTextResult::getSerializedResult() {
+	return _payload;
 }

@@ -12,11 +12,12 @@ namespace ApiMock {
 	};
 
 
-	class Html : public Result {
-		std::string _html;
+	class PureTextResult : public Result {
+		std::string _payload;
+		std::string _mime;
 
 	public:
-		Html(const std::string& html);
+		PureTextResult(const std::string& payload, const std::string& mime);
 		std::string getMimeType() override;
 		std::string getSerializedResult() override;
 	};
