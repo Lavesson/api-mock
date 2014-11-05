@@ -1,9 +1,12 @@
 #include "rootcontroller.h"
+#include "serialization/result.h"
 
-ApiMock::RootController::RootController(ContentService* content): _content(content) {
-
-}
+ApiMock::RootController::RootController(ContentService* content)
+	: _content(content) {}
 
 ApiMock::ResponseData ApiMock::RootController::get(RequestData request) {
-	return createResponse(HTTP_OK);
+	auto filename = request.get["filename"];
+	auto c = _content->getContent("www/" + filename);
+	RawResult result(c.content, c.mimeType);
+	return createResponse(HTTP_OK, &result);
 }
