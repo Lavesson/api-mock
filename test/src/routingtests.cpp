@@ -6,4 +6,9 @@ FIXTURE(RoutingTests) {
 		ApiMock::RoutingTemplate sut("/first/second");
 		assert.is_true(sut.isMatch("/first/second"));
 	}
+
+	TEST(MatchesTemplatedRoute) {
+		ApiMock::RoutingTemplate sut("/first/{second}/third");
+		assert.is_true(sut.isMatch("/first/banana/third"));
+	}
 }
