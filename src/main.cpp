@@ -18,7 +18,7 @@ FlagEntry extractFlagEntry(const std::string& entry) {
 	auto delimiterIndex = entry.find(DELIMITER);
 
 	return (delimiterIndex == std::string::npos)
-		? std::make_pair(entry, "")
+		? std::make_pair(entry.substr(FLAG_SIGN_LENGTH, delimiterIndex - FLAG_SIGN_LENGTH), "")
 		: std::make_pair(entry.substr(FLAG_SIGN_LENGTH, delimiterIndex-FLAG_SIGN_LENGTH), entry.substr(delimiterIndex + 1));
 }
 
