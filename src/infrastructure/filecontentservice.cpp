@@ -4,7 +4,7 @@
 
 ApiMock::Content ApiMock::FileContentService::getContent(const std::string& path) {
 	Content content;
-	auto dashFile = "www/dashboard.html";
+	auto dashFile = path;
 	std::ifstream dashboard(dashFile);
 	std::string temp;
 	std::string body;

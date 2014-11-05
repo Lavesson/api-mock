@@ -7,7 +7,7 @@ ApiMock::DashboardController::DashboardController(ContentService* content)
 	: _content(content) {}
 
 ApiMock::ResponseData ApiMock::DashboardController::get(RequestData request) {
-	auto content = _content->getContent(request.requestUri);
+	auto content = _content->getContent("www/dashboard.html");
 	RawResult c(content.content, content.mimeType);
 	return createResponse(HTTP_OK, &c);
 }
