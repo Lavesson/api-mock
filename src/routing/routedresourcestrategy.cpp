@@ -1,16 +1,26 @@
 #include "routedresourcestrategy.h"
 #include "routingtemplate.h"
+#include "routedictionary.h"
 
 void ApiMock::RoutedResourceStrategy::registerRoute(RoutingTemplate route, Controller* ctrl) {
 	_routeMap.insert(
 		std::make_pair(route, std::unique_ptr<Controller>(ctrl)));
 }
 
-ApiMock::Controller* ApiMock::RoutedResourceStrategy::matchRoute(const std::string& uri) {
-	for (auto& r : _routeMap)
-		if (r.first.isMatch(uri)) return r.second.get();
+ApiMock::Controller* ApiMock::RoutedResourceStrategy::matchRoute(RequestData* request) {
+	Controller* ctrl = nullptr;
+	auto uri = request->requestUri;
 
-	return nullptr;
+	/* Match routes in appearing order until encountering a working one */
+	for (auto& r : _routeMap) {
+		if (r.first.isMatch(uri)) {
+			ctrl = r.second.get();
+			RouteDictionary::Inject(r.first.getTemplate(), request);
+			break;
+		}
+	}
+
+	return ctrl;
 }
 
 ApiMock::ResponseData ApiMock::RoutedResourceStrategy::errorResponse(HTTP_RESPONSE_CODE status) {
@@ -21,17 +31,18 @@ ApiMock::ResponseData ApiMock::RoutedResourceStrategy::errorResponse(HTTP_RESPON
 	return response;
 }
 
-ApiMock::ResponseData ApiMock::RoutedResourceStrategy::createResponse(RequestData const& request) {
-	auto controller = matchRoute(request.requestUri);
+ApiMock::ResponseData ApiMock::RoutedResourceStrategy::createResponse(const RequestData& request) {
+	RequestData augmRequest = request;
+	auto controller = matchRoute(&augmRequest);
 
 	if (!controller)
 		return errorResponse(HTTP_NOT_FOUND);
 
-	switch (request.method) {
-	case RequestData::GET:		return controller->get(request);
-	case RequestData::POST:		return controller->post(request);
-	case RequestData::PUT:		return controller->put(request);
-	case RequestData::DELETE:	return controller->del(request);
+	switch (augmRequest.method) {
+	case RequestData::GET:		return controller->get(augmRequest);
+	case RequestData::POST:		return controller->post(augmRequest);
+	case RequestData::PUT:		return controller->put(augmRequest);
+	case RequestData::DELETE:	return controller->del(augmRequest);
 	default:					return errorResponse(HTTP_METHOD_NOT_ALLOWED);
 	}
 }

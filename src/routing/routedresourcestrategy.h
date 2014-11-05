@@ -15,7 +15,7 @@ namespace ApiMock {
 		public ResourceStrategy, public RouteRegistry {
 		std::unordered_map<RoutingTemplate, std::unique_ptr<Controller>> _routeMap;
 		ResponseData errorResponse(HTTP_RESPONSE_CODE status);
-		Controller* matchRoute(const std::string& uri);
+		Controller* matchRoute(RequestData* request);
 
 	public:
 		void registerRoute(RoutingTemplate route, Controller* ctrl) override;
