@@ -56,8 +56,31 @@ void startServer(Flags flags) {
 	}
 }
 
+bool flagIsPresent(std::string flag, Flags flags) {
+	return flags.find("help") != flags.end();
+}
+
+void showUsage() {
+	printf(
+		"Usage: apimock [options]\n"
+		"\n"
+		"Options:\n"
+		"  --port=PORT          Set the port to use when starting the server.\n"
+		"                       Default port value is 8888.\n"
+		"  --buffer=BYTES       Set the size in bytes of the buffer used for\n"
+		"                       HTTP requests. Default size is 8192 bytes\n"
+		"  --help               Print this screen.\n"
+		"\n");
+}
+
 int main(int argc, char** argv) {
 	auto flags = getMergedFlags(argc, argv);
+
+	if (flagIsPresent("help", flags)) {
+		showUsage();
+		return 0;
+	}
+
 	printf("Starting server at %s:%s\n", ADDRESS.c_str(), flags["port"].c_str());
 	startServer(flags);
 	return 0;
