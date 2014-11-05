@@ -13,10 +13,34 @@ bool ApiMock::RoutingTemplate::operator==(const RoutingTemplate& other) const {
 }
 
 ApiMock::RoutingTemplate::RoutingTemplate(const string& routeTemplate)
-	: _routeTemplate(routeTemplate), _routeParts(splitUriIntoParts(routeTemplate)) {}
+	: _routeTemplate(routeTemplate) {}
 
 string ApiMock::RoutingTemplate::getTemplate() const {
 	return _routeTemplate;
+}
+
+bool ApiMock::RoutingTemplate::matchesArgsToWildcard(std::string const& uri) const {
+	/* Grab the part or the template before the wildcard */
+	auto subrouteParts = splitUriIntoParts(_routeTemplate.substr(0, _routeTemplate.find("/*")));	
+	auto uriParts = splitUriIntoParts(uri);
+
+	vector<string> reducedUriParts;
+	std::copy(
+		uriParts.begin(),
+		uriParts.begin() + std::min(subrouteParts.size(), uriParts.size()),
+		std::back_inserter(reducedUriParts));
+
+	return matchingArgsAndConstraints(reducedUriParts, subrouteParts);
+}
+
+bool ApiMock::RoutingTemplate::matchesAllArgs(std::string const& uri) const {
+	auto uriParts = splitUriIntoParts(uri);
+	auto routeParts = splitUriIntoParts(_routeTemplate);
+	return matchingArgsAndConstraints(uriParts, routeParts);
+}
+
+bool ApiMock::RoutingTemplate::wildcardedRoute() const {
+	return _routeTemplate.find("/*") != std::string::npos;
 }
 
 vector<string> ApiMock::RoutingTemplate::splitUriIntoParts(const string& uri) const {
@@ -31,8 +55,8 @@ vector<string> ApiMock::RoutingTemplate::splitUriIntoParts(const string& uri) co
 	return output;
 }
 
-bool ApiMock::RoutingTemplate::numberOfArgsNotMatching(const std::vector<std::string>& uriParts) const {
-	return (uriParts.size() != _routeParts.size());
+bool ApiMock::RoutingTemplate::numberOfArgsNotMatching(const vector<string>& uriParts, const vector<string>& routeParts) const {
+	return (uriParts.size() != routeParts.size());
 }
 
 bool ApiMock::RoutingTemplate::isTemplatePart(std::string const& uriPart) const {
@@ -40,10 +64,10 @@ bool ApiMock::RoutingTemplate::isTemplatePart(std::string const& uriPart) const 
 			std::regex_match(uriPart, regex("\\{\\w+\\}")));
 }
 
-bool ApiMock::RoutingTemplate::constraintsNotMatching(const std::vector<std::string>& uriParts) const {
-	for (auto i = 0; i < uriParts.size(); ++i) {
-		if (!isTemplatePart(_routeParts[i])) {
-			if (uriParts[i] != _routeParts[i])
+bool ApiMock::RoutingTemplate::constraintsNotMatching(const std::vector<std::string>& uriParts, const vector<string>& routeParts) const {
+	for (unsigned i = 0; i < uriParts.size(); ++i) {
+		if (!isTemplatePart(routeParts[i])) {
+			if (uriParts[i] != routeParts[i])
 				return true;
 		}
 	}
@@ -51,14 +75,12 @@ bool ApiMock::RoutingTemplate::constraintsNotMatching(const std::vector<std::str
 	return false;
 }
 
+bool ApiMock::RoutingTemplate::matchingArgsAndConstraints(std::vector<std::string> const& uriParts, std::vector<std::string> const& routeParts) const {
+	return !(numberOfArgsNotMatching(uriParts, routeParts) || constraintsNotMatching(uriParts, routeParts));
+}
+
 bool ApiMock::RoutingTemplate::isMatch(string const& uri) const {
-	// TODO: Right now, I'm just matching exact URLs, which sucks.
-	vector<string> uriParts = splitUriIntoParts(uri);
-
-	if (numberOfArgsNotMatching(uriParts) || constraintsNotMatching(uriParts))
-		return false;
-
-	return true;
-
-	//return (uri == _routeTemplate);
+	return wildcardedRoute()
+		? matchesArgsToWildcard(uri)
+		: matchesAllArgs(uri);
 }
