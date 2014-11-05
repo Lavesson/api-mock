@@ -43,7 +43,7 @@ void ApiMock::RouteDictionary::Inject(std::string routeTemplate, RequestData* re
 	auto templateUriParts = splitUriIntoParts(routeTemplate);
 	auto incomingUriParts = splitUriIntoParts(request->requestUri);
 
-	for (auto i = 0; i < templateUriParts.size(); ++i) {
+	for (unsigned i = 0; i < templateUriParts.size(); ++i) {
 		if (isTemplatePart(templateUriParts[i])) {
 			request->get.insert(
 				std::make_pair(templateName(templateUriParts[i]), incomingUriParts[i]));

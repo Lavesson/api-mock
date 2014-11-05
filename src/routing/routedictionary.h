@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 namespace ApiMock {
-	class RequestData;
+	struct RequestData;
 
 	struct RouteDictionary {
 		static void Inject(std::string routeTemplate, RequestData* request);

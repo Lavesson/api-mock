@@ -71,7 +71,7 @@ ApiMock::RequestData ApiMock::RequestParser::parse(const std::string& requestBuf
 	RequestData request;
 	parseRequestLine(&request, r[0]);
 
-	for (int i = 1; i < r.size(); ++i) {
+	for (unsigned i = 1; i < r.size(); ++i) {
 		if (r[i] == "") {
 			parseRequestBody(&request, r, i + 1);
 			break;
