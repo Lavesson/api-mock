@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.8)
 add_definitions(-DUNICODE -D_UNICODE -DDLL_EXPORTS)
 
 project(ApiMock)
@@ -25,7 +25,7 @@ if(NOT MSVC)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wc++11-extensions")
 		message(STATUS "Supports -Wc++11-extensions")
 	else()
-        	message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+        message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 	endif()
 endif()
 
@@ -36,9 +36,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 file(GLOB_RECURSE HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
+list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
-
-add_executable(ApiMock ${HEADER_FILES} ${SOURCE_FILES} ${WEB_RESOURCE_FILES})
+add_library(Core OBJECT ${HEADER_FILES} ${SOURCE_FILES})
+add_executable(ApiMock $<TARGET_OBJECTS:Core> "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" ${WEB_RESOURCE_FILES})
 
 set(WWW "${CMAKE_SOURCE_DIR}/src/www")
 set(WWW_LOCATION_1 $<TARGET_FILE_DIR:ApiMock>/www)
@@ -51,3 +52,6 @@ add_custom_command(
 add_custom_command(
 	TARGET ApiMock POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${WWW} ${WWW_LOCATION_2})
+    
+# Dependencies
+add_subdirectory(test)

@@ -1,0 +1,11 @@
+file(GLOB_RECURSE HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
+file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/t-unit/
+	${CMAKE_CURRENT_SOURCE_DIR}/src/
+	${CMAKE_SOURCE_DIR}/src/
+	)
+
+add_executable(Test ${HEADER_FILES} ${SOURCE_FILES} $<TARGET_OBJECTS:Core>)
+
