@@ -15,6 +15,6 @@ void ApiMock::ConfigureRoutes(RouteRegistry* routes) {
 	routes->registerRoute(RoutingTemplate("/dashboard"), new DashboardController(
 		ServiceRegistry::Resolve<ContentService>()));
 
-	routes->registerRoute(RoutingTemplate("/{filename}"), new RootController(
+	routes->registerRoute(RoutingTemplate("/*"), new RootController(
 		ServiceRegistry::Resolve<ContentService>()));
 }
