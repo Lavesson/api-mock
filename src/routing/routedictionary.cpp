@@ -1,6 +1,7 @@
 #include "routedictionary.h"
 #include "http/requestdata.h"
 #include <sstream>
+#include <algorithm>
 #include <vector>
 #include <regex>
 
@@ -33,6 +34,10 @@ bool isTemplatePart(string templatePart) {
 }
 
 
+bool isWildcard(const std::string& templatePart) {
+	return templatePart == "*";
+}
+
 string templateName(string templatePart) {
 	std::smatch matches;
 	std::regex_match(templatePart, matches, regex("\\{(\\w+)\\}"));
@@ -47,6 +52,18 @@ void ApiMock::RouteDictionary::Inject(std::string routeTemplate, RequestData* re
 		if (isTemplatePart(templateUriParts[i])) {
 			request->get.insert(
 				std::make_pair(templateName(templateUriParts[i]), incomingUriParts[i]));
+		} else if (isWildcard(templateUriParts[i])) {
+			string joined;
+
+			std::for_each(incomingUriParts.begin() + i, incomingUriParts.end(), [&joined](string item) {
+				joined += item + "/";
+			});
+
+			// Remove the last trailing '/' from the foreach
+			joined.pop_back();
+
+			request->get.insert(
+				std::make_pair("@wildcard", joined));
 		}
 	}
 }
