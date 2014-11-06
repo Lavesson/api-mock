@@ -2,6 +2,7 @@
 #define APIMOCK_MIMETYPES_H
 
 #include <unordered_map>
+#include <regex>
 
 namespace ApiMock {
 	class Mime {
@@ -17,14 +18,14 @@ namespace ApiMock {
 					{ "png", "image/png" },
 			};
 
-			std::string::size_type idx;
-			idx = filename.rfind('.');
+			std::string fnLowerCase;
+			std::transform(filename.begin(), filename.end(), std::back_inserter(fnLowerCase), ::tolower);
+			std::smatch ext;
+			const std::string DEFAULT = "text/plain";
 
-			if (idx != std::string::npos)
-				return MIME_TYPES.at(filename.substr(idx + 1));
-
-			// If unknown, default to text/plain
-			return "text/plain";
+			return std::regex_search(fnLowerCase, ext, std::regex("\\.(\\w+)$"))
+				? (MIME_TYPES.find(ext[1]) != MIME_TYPES.end() ? MIME_TYPES.at(ext[1]) : DEFAULT) 
+				: DEFAULT;
 		}
 	};
 }
