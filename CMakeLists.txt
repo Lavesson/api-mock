@@ -40,18 +40,6 @@ list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
 add_library(Core OBJECT ${HEADER_FILES} ${SOURCE_FILES})
 add_executable(ApiMock $<TARGET_OBJECTS:Core> "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" ${WEB_RESOURCE_FILES})
-
-set(WWW "${CMAKE_SOURCE_DIR}/src/www")
-set(WWW_LOCATION_1 $<TARGET_FILE_DIR:ApiMock>/www)
-set(WWW_LOCATION_2 ${CMAKE_CURRENT_BINARY_DIR}/www)
-
-add_custom_command(
-	TARGET ApiMock POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory ${WWW} ${WWW_LOCATION_1})
-    
-add_custom_command(
-	TARGET ApiMock POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory ${WWW} ${WWW_LOCATION_2})
     
 # Dependencies
 add_subdirectory(test)
