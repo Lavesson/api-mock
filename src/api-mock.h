@@ -2,6 +2,7 @@
 #define APIMOCK_H
 
 #include "core/exceptions.h"
+#include "infrastructure/exceptions.h"
 
 #include "http/httpserver.h"
 #include "http/requestdata.h"

@@ -1,5 +1,5 @@
-#ifndef APIMOCK_EXCEPTIONS_H
-#define APIMOCK_EXCEPTIONS_H
+#ifndef APIMOCK_CORE_EXCEPTIONS_H
+#define APIMOCK_CORE_EXCEPTIONS_H
 #include <exception>
 #include <string>
 
@@ -9,7 +9,7 @@ namespace ApiMock {
 		std::string _problem;
 
 	public:
-		SocketException(const std::string& problem);
+		explicit SocketException(const std::string& problem);
 		char const* what() const override;
 	};
 }
