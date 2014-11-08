@@ -39,7 +39,7 @@ file(GLOB_RECURSE HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
 list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
 add_library(Core OBJECT ${HEADER_FILES} ${SOURCE_FILES})
-add_executable(ApiMock $<TARGET_OBJECTS:Core> "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" ${WEB_RESOURCE_FILES})
+add_executable(ApiMock $<TARGET_OBJECTS:Core> "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
     
 # Dependencies
 add_subdirectory(test)
