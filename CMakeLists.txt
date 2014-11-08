@@ -40,6 +40,7 @@ list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
 add_library(Core OBJECT ${HEADER_FILES} ${SOURCE_FILES})
 add_executable(ApiMock $<TARGET_OBJECTS:Core> "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
-    
+
 # Dependencies
+add_subdirectory(www)
 add_subdirectory(test)
