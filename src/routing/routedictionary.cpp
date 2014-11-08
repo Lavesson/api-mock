@@ -60,7 +60,7 @@ void ApiMock::RouteDictionary::Inject(std::string routeTemplate, RequestData* re
 			});
 
 			// Remove the last trailing '/' from the foreach
-			joined.pop_back();
+			if (joined.length() > 0 && joined.back() == '/') joined.pop_back();
 
 			request->get.insert(
 				std::make_pair("@wildcard", joined));
