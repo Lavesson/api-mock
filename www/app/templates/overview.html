@@ -1,0 +1,18 @@
+<h1 class="page-header">Overview</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th width="20%">URI</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="api in apiList">
+            <td><a href="{{api.endpoint}}" ng-bind="api.endpoint"></a></td>
+            <td ng-bind="api.desc"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
