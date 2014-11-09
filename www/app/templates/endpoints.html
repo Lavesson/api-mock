@@ -1,0 +1,23 @@
+<h1 class="page-header">Endpoints</h1>
+
+<div class="table-responsive">
+    <p>
+        <select ng-model="currentApi" ng-options="api.desc for api in apiList"></select>
+    </p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th colspan="2">URI</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="resource in currentApi.resources">
+            <td width="20%"><a href="{{resource.uri}}" ng-bind="resource.uri"></a></td>
+            <td><a href="#">Edit</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary btn-md">
+        <span class="glyphicon glyphicon-plus"></span> Create new Api
+    </a>
+</div>
