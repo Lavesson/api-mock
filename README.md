@@ -3,6 +3,10 @@
 ApiMock is a tool to quickly prototype RESTFul APIs. It's a work in progress, and still in *very* early development.
 At this point, it's really not useable yet. The first milestone will basically be to return static data for different URIs.
 
+### License
+
+Released under the MIT license. See the `LICENSE` file for details.
+
 ### Are there any binaries?
 
 No. Not yet. You have to build it from source right now, and the only reason you would do that is if you're interested in
