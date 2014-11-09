@@ -31,3 +31,7 @@ platforms, but it should be a relatively small amount of work. Porting to at lea
 * Start `apimock` from a terminal. Use the `--help` flag to get a list of options as well. By default, the server starts up
 at localhost:8888.
 * Open a browser and navigate to http://localhost:8888/dashboard
+
+### Contributions
+
+Feel free to either contact me or send pull requests if you're interested in contributing to this project.
