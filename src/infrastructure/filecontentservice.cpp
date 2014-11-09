@@ -14,7 +14,7 @@ ApiMock::Content ApiMock::FileContentService::getContent(const std::string& path
 	std::string body;
 
 	while (std::getline(dashboard, temp))
-		body += temp;
+		body += (temp + '\n');
 
 	dashboard.close();
 	Content c;
