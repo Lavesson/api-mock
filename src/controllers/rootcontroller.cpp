@@ -9,7 +9,7 @@ ApiMock::ResponseData ApiMock::RootController::get(RequestData request) {
 	auto filename = request.get["@wildcard"];
 
 	try {
-		auto c = _content->getContent("www/" + filename);
+		auto c = _content->getContent("www/app/" + filename);
 		RawResult result(c.content, c.mimeType);
 		return createResponse(HTTP_OK, &result);
 	}

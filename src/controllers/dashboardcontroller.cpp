@@ -3,6 +3,7 @@
 #include "infrastructure/contentservice.h"
 #include <fstream>
 
+
 ApiMock::DashboardController::DashboardController(ContentService* content)
 	: _content(content) {}
 
