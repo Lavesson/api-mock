@@ -24,9 +24,9 @@ FIXTURE(RootControllerTests) {
 
 	TEST(GetContentFromService) {
 		RequestData request; request.get["@wildcard"] = "temp.html";
-		auto response = sut->get(request);
+		sut->get(request);
 		assert.are_equal(1, contentStub->getContentTimesCalled);
-		assert.are_equal("www/temp.html", contentStub->lastPath);
+		assert.are_equal("www/app/temp.html", contentStub->lastPath);
 	}
 
 	TEST(StatusOkWhenResourceFound) {

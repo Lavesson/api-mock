@@ -6,7 +6,6 @@
 
 namespace ApiMock {
 	class ActionController : public Controller {
-	private:
 		typedef std::function<ResponseData(Controller*, const RequestData&)> RequestAction;
 		RequestAction _getAction;
 
