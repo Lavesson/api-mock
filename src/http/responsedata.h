@@ -7,8 +7,10 @@
 
 namespace ApiMock {
 	struct ResponseData {
+		typedef std::unordered_map<std::string, std::string> Headers;
+
 		std::string body;
-		std::unordered_map<std::string, std::string> headers;
+		Headers headers;
 		HTTP_RESPONSE_CODE statusCode;
 	};
 }
