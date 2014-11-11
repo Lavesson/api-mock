@@ -10,7 +10,7 @@ namespace ApiMock {
 		ContentService* _content;
 
 	public:
-		RootController(ContentService* content);
+		explicit RootController(ContentService* content);
 		ResponseData get(RequestData request) override;
 	};
 }

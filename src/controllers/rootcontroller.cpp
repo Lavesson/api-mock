@@ -6,6 +6,11 @@ ApiMock::RootController::RootController(ContentService* content)
 	: _content(content) {}
 
 ApiMock::ResponseData ApiMock::RootController::get(RequestData request) {
+	RawResult result("", "text/plain");
+
+	if (request.get.find("@wildcard") == request.get.end())
+		return createResponse(HTTP_NOT_FOUND, &result);
+
 	auto filename = request.get["@wildcard"];
 
 	try {
@@ -14,7 +19,6 @@ ApiMock::ResponseData ApiMock::RootController::get(RequestData request) {
 		return createResponse(HTTP_OK, &result);
 	}
 	catch (FileNotFoundException e) {
-		RawResult result("", "text/plain");
 		return createResponse(HTTP_NOT_FOUND, &result);
 	}
 }
