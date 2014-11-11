@@ -45,15 +45,3 @@ add_executable(ApiMock $<TARGET_OBJECTS:Core> "${CMAKE_CURRENT_SOURCE_DIR}/src/m
 add_subdirectory(www)
 add_subdirectory(test)
 
-# Copy files from www to correct output folders as a post build step
-set(app_target_1 $<TARGET_FILE_DIR:ApiMock>/www/app)
-set(app_target_2 ${CMAKE_CURRENT_BINARY_DIR}/www/app)
-set(app "${CMAKE_SOURCE_DIR}/www/app")
-
-add_custom_command(
-    TARGET ApiMock POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${app} ${app_target_1})
-    
-add_custom_command(
-    TARGET ApiMock POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${app} ${app_target_2})
