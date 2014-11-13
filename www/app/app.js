@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-var app = angular.module('ApiMock', ['ngRoute']).
+var app = angular.module('ApiMock', ['ngRoute', 'ui.bootstrap']).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when("/", {
             templateUrl: "templates/overview.html",
@@ -11,7 +11,14 @@ var app = angular.module('ApiMock', ['ngRoute']).
             controller: "DashboardController"
         });
     }])
-    .controller("DashboardController", ["$scope", function($scope) {
+    .controller("DashboardController", ["$scope", "$modal", function($scope, $modal) {
+        $scope.open = function () {
+            $modal.open({
+                templateUrl: "templates/addroute.html"
+                //backdrop: false,
+            });
+        };
+
         $scope.apiList = [
             {
                 apiId: 1,
