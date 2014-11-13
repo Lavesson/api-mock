@@ -6,7 +6,11 @@
         <label for="template">URL Template</label>
         <input type="text" class="form-control" id="template">
         <label for="exec">Execute on access</label>
-        <textarea class="form-control" rows="5" id="exec"></textarea>
+        <textarea
+                ui-codemirror="{lineNumbers: true}"
+                ng-model="code"
+                id="exec"
+                class="form-control"></textarea>
     </div>
 </div>
 <div class="modal-footer">
