@@ -81,6 +81,15 @@ var app = angular.module('ApiMock', ['ngRoute', 'ui.bootstrap', 'ui.codemirror']
 
         ApiService.subscribe($scope);
 
+        $scope.open = function () {
+            $modal.open({
+                templateUrl: "templates/addroute.html",
+                controller: "RouteEditController"
+            });
+        };
+    }])
+
+    .controller("RouteEditController", ["$scope", "ApiService", function($scope, ApiService) {
         $scope.editorOptions = {
             value: "x",
             lineWrapping: true,
@@ -93,11 +102,4 @@ var app = angular.module('ApiMock', ['ngRoute', 'ui.bootstrap', 'ui.codemirror']
         };
 
         $scope.code = "var x = 0;";
-
-        $scope.open = function () {
-            $modal.open({
-                templateUrl: "templates/addroute.html",
-                controller: "DashboardController"
-            });
-        };
     }]);
