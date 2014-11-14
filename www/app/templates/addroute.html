@@ -5,12 +5,11 @@
     <div class="form-group">
         <label for="template">URL Template</label>
         <input type="text" class="form-control" id="template">
-        <label for="exec">Execute on access</label>
-        <textarea
-                ui-codemirror="{lineNumbers: true}"
+        <label>Execute on access</label>
+        <ui-codemirror
+                ui-codemirror-opts="editorOptions"
                 ng-model="code"
-                id="exec"
-                class="form-control"></textarea>
+                id="exec"></ui-codemirror>
     </div>
 </div>
 <div class="modal-footer">

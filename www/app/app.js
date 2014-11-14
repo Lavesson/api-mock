@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-var app = angular.module('ApiMock', ['ngRoute', 'ui.bootstrap']).
+var app = angular.module('ApiMock', ['ngRoute', 'ui.bootstrap', 'ui.codemirror']).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when("/", {
             templateUrl: "templates/overview.html",
@@ -12,10 +12,15 @@ var app = angular.module('ApiMock', ['ngRoute', 'ui.bootstrap']).
         });
     }])
     .controller("DashboardController", ["$scope", "$modal", function($scope, $modal) {
+        $scope.editorOptions = {
+            lineWrapping: true,
+            lineNumbers: true
+        };
+
         $scope.open = function () {
             $modal.open({
-                templateUrl: "templates/addroute.html"
-                //backdrop: false,
+                templateUrl: "templates/addroute.html",
+                controller: "DashboardController"
             });
         };
 
