@@ -11,7 +11,76 @@ var app = angular.module('ApiMock', ['ngRoute', 'ui.bootstrap', 'ui.codemirror']
             controller: "DashboardController"
         });
     }])
-    .controller("DashboardController", ["$scope", "$modal", function($scope, $modal) {
+
+    .factory("ApiService", [
+        "$http", function($http) {
+            var apiList = [
+                {
+                    apiId: 1,
+                    endpoint: "/api/test1",
+                    desc: "First API",
+                    resources: [
+                        { uri: "/user" },
+                        { uri: "/user/{id}" },
+                        { uri: "/user/{id}/friends" },
+                        { uri: "/offers/{date}" }
+                    ]},
+                {
+                    apiId: 2,
+                    endpoint: "/api/test2",
+                    desc: "Second API",
+                    resources: [
+                        { uri: "/cats" },
+                        { uri: "/dogs" },
+                        { uri: "/dogs/{id}" },
+                        { uri: "/cats/{id}" }
+                    ]},
+                {
+                    apiId: 3,
+                    endpoint: "/api/test3",
+                    desc: "Third API",
+                    resources: [
+                        { uri: "/customer" },
+                        { uri: "/sales" },
+                        { uri: "/customer/{id}" },
+                        { uri: "/customer/{id}/orders" }
+                    ]
+                }
+            ];
+
+            var subscribers = [];
+
+            var notify = function (onNotify) {
+                subscribers.forEach(onNotify);
+            };
+
+            var notifyApiListChanged = function (subscriber) {
+                subscriber.onApiListChanged(angular.copy(apiList));
+            }
+
+            return {
+                subscribe: function(s) {
+                    subscribers.push(s);
+                    notifyApiListChanged(s);
+                }
+            };
+        }])
+
+    .controller("DashboardController", ["$scope", "$modal", "ApiService", function($scope, $modal, ApiService) {
+        $scope.apiList = [];
+
+        $scope.selectAppropriateItem = function () {
+            if (!$scope.currentApi && $scope.apiList.length > 0)
+                $scope.currentApi = $scope.apiList[0];
+        };
+
+        $scope.onApiListChanged = function(list) {
+            $scope.apiList = list;
+            $scope.selectAppropriateItem();
+        };
+
+        ApiService.subscribe($scope);
+
         $scope.editorOptions = {
             value: "x",
             lineWrapping: true,
@@ -31,40 +100,4 @@ var app = angular.module('ApiMock', ['ngRoute', 'ui.bootstrap', 'ui.codemirror']
                 controller: "DashboardController"
             });
         };
-
-        $scope.apiList = [
-            {
-                apiId: 1,
-                endpoint: "/api/test1",
-                desc: "First API",
-                resources: [
-                    { uri: "/user" },
-                    { uri: "/user/{id}" },
-                    { uri: "/user/{id}/friends" },
-                    { uri: "/offers/{date}" }
-                ]},
-            {
-                apiId: 2,
-                endpoint: "/api/test2",
-                desc: "Second API",
-                resources: [
-                    { uri: "/cats" },
-                    { uri: "/dogs" },
-                    { uri: "/dogs/{id}" },
-                    { uri: "/cats/{id}" }
-                ]},
-            {
-                apiId: 3,
-                endpoint: "/api/test3",
-                desc: "Third API",
-                resources: [
-                    { uri: "/customer" },
-                    { uri: "/sales" },
-                    { uri: "/customer/{id}" },
-                    { uri: "/customer/{id}/orders" }
-                ]
-            }
-        ];
-
-        $scope.currentApi = $scope.apiList[0];
     }]);
