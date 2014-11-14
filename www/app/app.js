@@ -13,9 +13,17 @@ var app = angular.module('ApiMock', ['ngRoute', 'ui.bootstrap', 'ui.codemirror']
     }])
     .controller("DashboardController", ["$scope", "$modal", function($scope, $modal) {
         $scope.editorOptions = {
+            value: "x",
             lineWrapping: true,
-            lineNumbers: true
+            lineNumbers: true,
+            styleActiveLine: true,
+            autofocus: true,
+            matchBrackets: true,
+            autoCloseBrackets: true,
+            theme: "neat"
         };
+
+        $scope.code = "var x = 0;";
 
         $scope.open = function () {
             $modal.open({

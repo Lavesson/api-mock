@@ -1,4 +1,16 @@
 /*
+ * CodeMirror
+ */
+
+.CodeMirror {
+  border: 1px solid #ccc;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+/*
  * Base structure
  */
 
