@@ -89,6 +89,12 @@ var app = angular.module('ApiMock', ['ngRoute', 'ui.bootstrap', 'ui.codemirror']
         };
     }])
 
+    .controller("LocationController", ["$scope", "$location", function($scope, $location) {
+       $scope.isActive = function(url) {
+           return $location.path() == url;
+       }
+    }])
+
     .controller("RouteEditController", ["$scope", "ApiService", function($scope, ApiService) {
         $scope.editorOptions = {
             value: "x",
