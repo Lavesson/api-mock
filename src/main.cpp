@@ -62,7 +62,7 @@ bool flagIsPresent(std::string flag, Flags flags) {
 
 void showUsage() {
 	printf(
-		"Usage: apimock [options]\n"
+		"Usage: api-mock [options]\n"
 		"\n"
 		"Options:\n"
 		"  --port=PORT          Set the port to use when starting the server.\n"

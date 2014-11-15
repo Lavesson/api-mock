@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.8)
 add_definitions(-DUNICODE -D_UNICODE -DDLL_EXPORTS)
 
-project(ApiMock)
+project(api-mock)
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -38,8 +38,8 @@ file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 file(GLOB_RECURSE HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
 list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
-add_library(Core OBJECT ${HEADER_FILES} ${SOURCE_FILES})
-add_executable(ApiMock $<TARGET_OBJECTS:Core> "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
+add_library(core OBJECT ${HEADER_FILES} ${SOURCE_FILES})
+add_executable(api-mock $<TARGET_OBJECTS:core> "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
 # Dependencies
 add_subdirectory(www)

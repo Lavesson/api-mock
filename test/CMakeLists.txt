@@ -7,5 +7,5 @@ include_directories(
 	${CMAKE_SOURCE_DIR}/src/
 	)
 
-add_executable(Test ${HEADER_FILES} ${SOURCE_FILES} $<TARGET_OBJECTS:Core>)
+add_executable(test ${HEADER_FILES} ${SOURCE_FILES} $<TARGET_OBJECTS:core>)
 
