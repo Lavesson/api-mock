@@ -1,6 +1,6 @@
 #ifndef APIMOCK_REQUESTPARSER_H
 #define APIMOCK_REQUESTPARSER_H
-#include "http/RequestData.h"
+#include "http/requestdata.h"
 #include <string>
 #include <vector>
 #include <unordered_map>
