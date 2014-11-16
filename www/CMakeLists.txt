@@ -1,5 +1,9 @@
-# TODO: This will probably not hold on any platform but windows:
-set (npm "npm.cmd")
+set (npm "npm")
+
+if (WIN32)
+	set (npm "npm.cmd")
+endif()
+
 set (npm_args "install")
 
 # Copy files from www to correct output folders as a post build step
