@@ -10,8 +10,8 @@ namespace ApiMock {
 
 	public:
 		explicit SocketException(const std::string& problem);
-		char const* what() const override;
-	};
+        const char* what() const noexcept override;
+    };
 }
 
 #endif

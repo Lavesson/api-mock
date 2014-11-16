@@ -3,6 +3,6 @@
 ApiMock::FileNotFoundException::FileNotFoundException(std::string const& filename) : _filename(filename) {
 }
 
-char const* ApiMock::FileNotFoundException::what() const {
+const char* ApiMock::FileNotFoundException::what() const noexcept {
 	return _filename.c_str();
 }
