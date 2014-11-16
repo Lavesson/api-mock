@@ -38,6 +38,12 @@ file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 file(GLOB_RECURSE HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
 list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
+if (WIN32)
+list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/arch/unix/server.cpp")
+elseif (UNIX)
+list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/arch/win32/server.cpp")
+endif()
+
 add_library(core OBJECT ${HEADER_FILES} ${SOURCE_FILES})
 add_executable(api-mock $<TARGET_OBJECTS:core> "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
