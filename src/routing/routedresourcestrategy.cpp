@@ -46,3 +46,4 @@ ApiMock::ResponseData ApiMock::RoutedResourceStrategy::createResponse(const Requ
 	default:					return errorResponse(HTTP_METHOD_NOT_ALLOWED);
 	}
 }
+

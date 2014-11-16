@@ -27,10 +27,11 @@ namespace ApiMock {
 namespace std {
 	template <>
 	struct hash<ApiMock::RoutingTemplate> {
-		std::size_t operator()(const ApiMock::RoutingTemplate& key) {
+		std::size_t operator()(const ApiMock::RoutingTemplate& key) const {
 			return hash<std::string>()(key.getTemplate());
 		}
 	};
 }
 
 #endif
+
