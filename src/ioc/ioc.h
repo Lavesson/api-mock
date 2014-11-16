@@ -2,6 +2,7 @@
 #define	APIMOCK_IOC_H
 
 #include <unordered_map>
+#include <typeinfo>
 #include <string>
 
 namespace ApiMock {
