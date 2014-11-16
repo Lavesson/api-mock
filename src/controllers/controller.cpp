@@ -8,6 +8,16 @@ void ApiMock::Controller::augmentHeaders(ResponseData* responseData, const Respo
 		responseData->headers[header.first] = header.second;
 }
 
+ApiMock::ResponseData ApiMock::Controller::createResponse(HTTP_RESPONSE_CODE statusCode) {
+    ResponseData::Headers h;
+    return createResponse(statusCode, h);
+}
+
+ApiMock::ResponseData ApiMock::Controller::createResponse(HTTP_RESPONSE_CODE statusCode, Result* payload) {
+    ResponseData::Headers h;
+    return createResponse(statusCode, payload, h);
+}
+
 ApiMock::ResponseData ApiMock::Controller::createResponse(HTTP_RESPONSE_CODE statusCode, const ResponseData::Headers& customHeaders) {
 	ResponseData response;
 
