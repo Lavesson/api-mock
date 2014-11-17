@@ -19,8 +19,7 @@ working on ApiMock yourself.
 
 ### Platforms
 
-Right now, Windows only. The only real reason for this is because I haven't gotten around porting the sockets server to other
-platforms, but it should be a relatively small amount of work. Porting to at least Linux will be done quite soon.
+Windows (MSVC/VS2013) and Linux (GCC 4.9). It *might* build on GCC 4.8 (not sure), but it most definitely doesn't build on 4.7 due to regex issues. Also, it might build on other compilers such as Clang (not tried yet).
 
 ### Building
 
