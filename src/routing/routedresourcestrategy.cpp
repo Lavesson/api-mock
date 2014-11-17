@@ -1,9 +1,10 @@
 #include "routedresourcestrategy.h"
 #include "routingtemplate.h"
 #include "routedictionary.h"
+#include "controllers/controller.h"
 
 void ApiMock::RoutedResourceStrategy::registerRoute(RoutingTemplate route, Controller* ctrl) {
-	_routeMap.insert(
+	_routeMap.push_back(
 		std::make_pair(route, std::unique_ptr<Controller>(ctrl)));
 }
 

@@ -5,7 +5,7 @@
 #include "routeregistry.h"
 #include "routingtemplate.h"
 #include "controllers/controller.h"
-#include <unordered_map>
+#include <vector>
 #include <memory>
 
 namespace ApiMock {
@@ -13,7 +13,7 @@ namespace ApiMock {
 
 	class RoutedResourceStrategy : 
 		public ResourceStrategy, public RouteRegistry {
-		std::unordered_map<RoutingTemplate, std::unique_ptr<Controller>> _routeMap;
+		std::vector<std::pair<RoutingTemplate, std::unique_ptr<Controller>>> _routeMap;
 		ResponseData errorResponse(HTTP_RESPONSE_CODE status);
 		Controller* matchRoute(RequestData* request);
 
