@@ -10,7 +10,7 @@ namespace ApiMock {
 
 	public:
 		explicit FileNotFoundException(const std::string& filename);
-		const char* what() const noexcept override;
+		const char* what() const throw() override;
 	};
 }
 
