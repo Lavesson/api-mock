@@ -1,6 +1,4 @@
-#ifndef	APIMOCK_RESOURCESTRATEGY_H
-#define APIMOCK_RESOURCESTRATEGY_H
-
+#pragma once
 #include "requestdata.h"
 #include "responsedata.h"
 
@@ -11,5 +9,3 @@ namespace ApiMock {
 		virtual ResponseData createResponse(const RequestData& request) = 0;
 	};
 }
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef APIMOCK_RESPONSEDATA_H
-#define APIMOCK_RESPONSEDATA_H
-
+#pragma once
 #include <string>
 #include <unordered_map>
 #include "statuscodes.h"
@@ -25,5 +23,3 @@ namespace ApiMock {
 		return "Server responded with " + std::to_string(statusCode);
 	}
 }
-
-#endif

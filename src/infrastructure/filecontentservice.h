@@ -1,6 +1,4 @@
-#ifndef	APIMOCK_FILECONTENTSERVICE_H
-#define APIMOCK_FILECONTENTSERVICE_H
-
+#pragma once
 #include "contentservice.h"
 #include <string>
 
@@ -13,5 +11,3 @@ namespace ApiMock {
 		Content getContent(std::string const& path) override;
 	};
 }
-
-#endif

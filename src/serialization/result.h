@@ -1,6 +1,4 @@
-#ifndef	APIMOCK_RESULT_H
-#define APIMOCK_RESULT_H
-
+#pragma once
 #include <string>
 
 namespace ApiMock {
@@ -22,5 +20,3 @@ namespace ApiMock {
 		std::string getSerializedResult() override;
 	};
 }
-
-#endif

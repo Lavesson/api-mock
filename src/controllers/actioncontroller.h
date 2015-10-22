@@ -1,6 +1,4 @@
-#ifndef	APIMOCK_ACTIONCONTROLLER_H
-#define APIMOCK_ACTIONCONTROLLER_H
-
+#pragma once
 #include "controller.h"
 #include <functional>
 
@@ -14,5 +12,3 @@ namespace ApiMock {
 		ResponseData get(RequestData request) override;
 	};
 }
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef APIMOCK_H
-#define APIMOCK_H
-
+#pragma once
 #include "core/exceptions.h"
 #include "infrastructure/exceptions.h"
 
@@ -11,5 +9,3 @@
 
 #include "routing/config.h"
 #include "routing/routedresourcestrategy.h"
-
-#endif

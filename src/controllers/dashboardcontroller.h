@@ -1,6 +1,4 @@
-#ifndef	APIMOCK_DASHBOARDCONTROLLER_H
-#define APIMOCK_DASHBOARDCONTROLLER_H
-
+#pragma once
 #include "controller.h"
 
 namespace ApiMock {
@@ -15,5 +13,3 @@ namespace ApiMock {
 		ResponseData get(RequestData request) override;
 	};
 }
-
-#endif

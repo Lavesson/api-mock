@@ -1,6 +1,4 @@
-#ifndef	APIMOCK_CONTROLLER_H
-#define APIMOCK_CONTROLLER_H
-
+#pragma once
 #include "http/requestdata.h"
 #include "http/responsedata.h"
 
@@ -27,5 +25,3 @@ namespace ApiMock {
 		virtual ResponseData post(RequestData request);
 	};
 }
-
-#endif

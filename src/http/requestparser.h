@@ -1,5 +1,4 @@
-#ifndef APIMOCK_REQUESTPARSER_H
-#define APIMOCK_REQUESTPARSER_H
+#pragma once
 #include "http/requestdata.h"
 #include <string>
 #include <vector>
@@ -21,5 +20,3 @@ namespace ApiMock {
 		RequestData parse(const std::string& requestBuffer);
 	};
 }
-
-#endif

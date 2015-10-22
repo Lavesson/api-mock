@@ -1,5 +1,6 @@
-#ifndef	APIMOCK_ROUTEREGISTRY_H
-#define APIMOCK_ROUTEREGISTRY_H
+#pragma once
+
+#include "routingtemplate.h"
 
 namespace ApiMock {
 	class Controller;
@@ -11,5 +12,3 @@ namespace ApiMock {
 		virtual void registerRoute(RoutingTemplate route, Controller* ctrl) = 0;
 	};
 }
-
-#endif

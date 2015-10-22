@@ -1,6 +1,4 @@
-#ifndef	APIMOCK_INCOMING_REQUEST
-#define APIMOCK_INCOMING_REQUEST
-
+#pragma once
 #include <string>
 
 namespace ApiMock {
@@ -11,5 +9,3 @@ namespace ApiMock {
 		virtual void sendResponse(const std::string& responseAsString) = 0;
 	};
 }
-
-#endif

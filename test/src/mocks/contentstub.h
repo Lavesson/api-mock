@@ -1,5 +1,4 @@
-#ifndef TEST_CONTENTSTUB_H
-#define	TEST_CONTENTSTUB_H
+#pragma once
 #include "infrastructure/contentservice.h"
 #include <functional>
 
@@ -15,5 +14,3 @@ public:
 	
 	std::function<ApiMock::Content(std::string const& path)> _getContent;
 };
-
-#endif

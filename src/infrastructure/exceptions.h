@@ -1,5 +1,4 @@
-#ifndef APIMOCK_INFRA_EXCEPTIONS_H
-#define APIMOCK_INFRA_EXCEPTIONS_H
+#pragma once
 #include <exception>
 #include <string>
 
@@ -13,5 +12,3 @@ namespace ApiMock {
 		const char* what() const throw() override;
 	};
 }
-
-#endif

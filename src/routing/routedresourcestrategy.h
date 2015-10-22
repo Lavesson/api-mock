@@ -1,6 +1,4 @@
-#ifndef	APIMOCK_ROUTEDRESOURCESTRATEGY_H
-#define APIMOCK_ROUTEDRESOURCESTRATEGY_H
-
+#pragma once
 #include "http/resourcestrategy.h"
 #include "routeregistry.h"
 #include "routingtemplate.h"
@@ -22,5 +20,3 @@ namespace ApiMock {
 		ResponseData createResponse(RequestData const& request) override;
 	};
 }
-
-#endif

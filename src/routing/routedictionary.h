@@ -1,6 +1,4 @@
-#ifndef	APIMOCK_ROUTEDICTIONARY_H
-#define APIMOCK_ROUTEDICTIONARY_H
-
+#pragma once
 #include <string>
 #include <unordered_map>
 
@@ -12,5 +10,3 @@ namespace ApiMock {
 		std::unordered_map<std::string, std::string> get;
 	};
 }
-
-#endif

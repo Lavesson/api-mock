@@ -1,5 +1,4 @@
-#ifndef	APIMOCK_HTTPSERVER_H
-#define APIMOCK_HTTPSERVER_H
+#pragma once
 #include <memory>
 #include <string>
 #include "core/server.h"
@@ -24,5 +23,3 @@ namespace ApiMock {
 		void logVerboseResponseIfNotSuccess(const ResponseData &response);
 	};
 }
-
-#endif

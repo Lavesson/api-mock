@@ -1,7 +1,7 @@
-#ifndef APIMOCK_RESPONSESERIALIZER_H
-#define APIMOCK_RESPONSESERIALIZER_H
+#pragma once
 #include <string>
 #include <http/statuscodes.h>
+#include "responsedata.h"
 
 namespace ApiMock {
 	struct ResponseData;
@@ -14,5 +14,3 @@ namespace ApiMock {
 		std::string serialize(ResponseData response_data);
 	};
 }
-
-#endif

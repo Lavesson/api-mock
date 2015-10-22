@@ -1,6 +1,4 @@
-#ifndef APIMOCK_IOC_H
-#define	APIMOCK_IOC_H
-
+#pragma once
 #include <unordered_map>
 #include <typeinfo>
 #include <string>
@@ -23,5 +21,3 @@ namespace ApiMock {
 
 	std::unordered_map<std::string, void*> ServiceRegistry::container;
 };
-
-#endif

@@ -1,6 +1,3 @@
-#ifndef	APIMOCK_STATICRESOURCESTRATEGY_H
-#define APIMOCK_STATICRESOURCESTRATEGY_H
-
 #include "resourcestrategy.h"
 
 namespace ApiMock {
@@ -9,5 +6,3 @@ namespace ApiMock {
 		ResponseData createResponse(RequestData const& request) override;
 	};
 }
-
-#endif

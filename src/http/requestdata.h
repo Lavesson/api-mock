@@ -1,6 +1,4 @@
-#ifndef APIMOCK_REQUESTDATA_H
-#define APIMOCK_REQUESTDATA_H
-
+#pragma once
 #include <string>
 #include <unordered_map>
 #include "routing/routedictionary.h"
@@ -37,5 +35,3 @@ namespace ApiMock {
 		return methodStr + " " + requestUri;
 	}
 }
-
-#endif

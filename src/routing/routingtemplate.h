@@ -1,6 +1,4 @@
-#ifndef	APIMOCK_ROUTINGTEMPLATE_H
-#define APIMOCK_ROUTINGTEMPLATE_H
-
+#pragma once
 #include <string>
 #include <vector>
 
@@ -32,6 +30,3 @@ namespace std {
 		}
 	};
 }
-
-#endif
-

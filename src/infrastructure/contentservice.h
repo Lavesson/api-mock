@@ -1,6 +1,4 @@
-#ifndef APIMOCK_CONTENTSERVICE_H
-#define	APIMOCK_CONTENTSERVICE_H
-
+#pragma once
 #include <string>
 
 namespace ApiMock {
@@ -15,5 +13,3 @@ namespace ApiMock {
 		virtual Content getContent(const std::string& path) = 0;
 	};
 }
-
-#endif

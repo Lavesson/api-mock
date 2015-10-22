@@ -1,5 +1,4 @@
-#ifndef	APIMOCK_SERVER_H
-#define APIMOCK_SERVER_H
+#pragma once
 #include <string>
 #include <memory>
 #include <functional>
@@ -24,5 +23,3 @@ namespace ApiMock {
 		void close(IncomingRequest* incoming);
 	};
 }
-
-#endif

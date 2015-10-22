@@ -1,6 +1,4 @@
-#ifndef	APIMOCK_MIMETYPES_H
-#define APIMOCK_MIMETYPES_H
-
+#pragma once
 #include <unordered_map>
 #include <regex>
 
@@ -41,5 +39,3 @@ namespace ApiMock {
 		}
 	};
 }
-
-#endif
