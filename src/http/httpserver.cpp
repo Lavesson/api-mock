@@ -19,8 +19,8 @@ void ApiMock::HttpServer::startServer(std::string const& address, int port, int 
 
 	while (server.acceptNext(&incoming)) {
 		auto requestString = incoming->getRequestAsString();
-		logVerboseRequest(requestString);
 		auto request = rp.parse(requestString);
+		logVerboseRequest(request);
 		auto response = resourceStrategy->createResponse(request);
 		incoming->sendResponse(rs.serialize(response));
 		logVerboseResponseIfNotSuccess(response);
@@ -29,9 +29,8 @@ void ApiMock::HttpServer::startServer(std::string const& address, int port, int 
 }
 
 
-void ApiMock::HttpServer::logVerboseRequest(const std::string& requestString) {
-	auto delimPoint = requestString.find_first_of("\n");
-	ApiMock::HttpServer::logVerboseLine(requestString.substr(0, delimPoint));
+void ApiMock::HttpServer::logVerboseRequest(RequestData request) {
+	ApiMock::HttpServer::logVerboseLine(request.toString());
 }
 
 void ApiMock::HttpServer::logVerboseLine(const std::string& output) {

@@ -21,7 +21,21 @@ namespace ApiMock {
 		std::string requestUri;
 		std::unordered_map<std::string, std::string> headers;
 		std::unordered_map<std::string, std::string> get;
+
+		std::string toString() const;
 	};
+
+	inline std::string RequestData::toString() const {
+		std::string methodStr;
+		switch (method) {
+			case GET: methodStr += "GET"; break;
+			case POST: methodStr += "POST"; break;
+			case PUT: methodStr += "PUT"; break;
+			case DELETE: methodStr += "DELETE"; break;
+		}
+
+		return methodStr + " " + requestUri;
+	}
 }
 
 #endif

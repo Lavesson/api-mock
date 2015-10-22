@@ -18,7 +18,7 @@ namespace ApiMock {
 		~HttpServer();
 		void startServer(const std::string& address, int port, int bufferSize, ResourceStrategy* resourceStrategy);
 
-		void logVerboseRequest(const std::string& requestString);
+		void logVerboseRequest(RequestData request);
 		void logVerboseLine(const std::string &output);
 
 		void logVerboseResponseIfNotSuccess(const ResponseData &response);
