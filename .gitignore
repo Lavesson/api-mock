@@ -8,3 +8,6 @@ bin/
 
 # npm
 npm-debug.log
+
+# intellij/clion
+.idea/
