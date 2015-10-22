@@ -66,7 +66,7 @@ var app = angular.module('ApiMock', ['ngRoute', 'ui.bootstrap', 'ui.codemirror']
             };
         }])
 
-    .controller("DashboardController", ["$scope", "$modal", "ApiService", function($scope, $modal, ApiService) {
+    .controller("DashboardController", ["$scope", "$modal", "ApiService", "$routeParams", function($scope, $modal, ApiService, $routeParams) {
         $scope.apiList = [];
 
         $scope.selectAppropriateItem = function () {

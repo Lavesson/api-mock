@@ -11,11 +11,14 @@ namespace ApiMock {
 		Server server;
 		HttpServer& operator=(const HttpServer&);
 		HttpServer(const HttpServer&);
+		bool isVerbose;
 
 	public:
-		HttpServer();
+		explicit HttpServer(bool verbose);
 		~HttpServer();
 		void startServer(const std::string& address, int port, int bufferSize, ResourceStrategy* resourceStrategy);
+
+		void logVerboseLine(const std::string &output);
 	};
 }
 

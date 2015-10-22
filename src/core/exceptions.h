@@ -12,6 +12,15 @@ namespace ApiMock {
 		explicit SocketException(const std::string& problem);
         const char* what() const throw() override;
     };
+
+	class UnknownFlagException : public std::exception {
+	private:
+		std::string _flag;
+
+	public:
+		explicit UnknownFlagException(const std::string& flag);
+		const char* what() const throw() override;
+	};
 }
 
 #endif
