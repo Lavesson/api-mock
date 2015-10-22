@@ -3,7 +3,6 @@
 #include "requestparser.h"
 #include "responseserializer.h"
 #include "core/incomingrequest.h"
-#include <string>
 #include <algorithm>
 
 ApiMock::HttpServer::HttpServer(bool verbose) : isVerbose(verbose) {}

@@ -19,7 +19,7 @@ static const std::vector<std::string> SUPPORTED_FLAGS = {
 };
 
 bool supportedFlag(const std::string& flag) {
-	return std::find(SUPPORTED_FLAGS.begin(), SUPPORTED_FLAGS.end(), flag.substr(2)) != SUPPORTED_FLAGS.end();
+	return std::find(SUPPORTED_FLAGS.begin(), SUPPORTED_FLAGS.end(), flag) != SUPPORTED_FLAGS.end();
 }
 
 void makeSureFlagIsSupported(const std::string& entry) {
@@ -28,14 +28,16 @@ void makeSureFlagIsSupported(const std::string& entry) {
 }
 
 FlagEntry extractFlagEntry(const std::string& entry) {
-	makeSureFlagIsSupported(entry);
-
 	const std::string DELIMITER = "=";
 	auto delimiterIndex = entry.find(DELIMITER);
 
-	return (delimiterIndex == std::string::npos)
-		? std::make_pair(entry.substr(FLAG_SIGN_LENGTH, delimiterIndex - FLAG_SIGN_LENGTH), "")
-		: std::make_pair(entry.substr(FLAG_SIGN_LENGTH, delimiterIndex-FLAG_SIGN_LENGTH), entry.substr(delimiterIndex + 1));
+	FlagEntry flag = (delimiterIndex == std::string::npos)
+					 ? std::make_pair(entry.substr(FLAG_SIGN_LENGTH, delimiterIndex - FLAG_SIGN_LENGTH), "")
+					 : std::make_pair(entry.substr(FLAG_SIGN_LENGTH, delimiterIndex-FLAG_SIGN_LENGTH),
+									  entry.substr(delimiterIndex + 1));
+
+	makeSureFlagIsSupported(flag.first);
+	return flag;
 }
 
 bool isValidFlagFormat(const std::string &next) {
